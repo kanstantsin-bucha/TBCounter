@@ -1,0 +1,12 @@
+use_frameworks!
+
+target 'TBCounter_Example' do
+  pod 'TBCounter', :path => '../'
+
+  target 'TBCounter_Tests' do
+    inherit! :search_paths
+
+    pod 'Specta'
+  pod 'Expecta'
+  end
+end
