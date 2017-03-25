@@ -1,0 +1,25 @@
+PODS:
+  - CDBKit (1.0.1)
+  - Expecta (1.0.5)
+  - Specta (1.0.6)
+  - TBCounter (1.0.1):
+    - CDBKit (~> 1.0)
+
+DEPENDENCIES:
+  - Expecta
+  - Specta
+  - TBCounter (from `../`)
+
+EXTERNAL SOURCES:
+  TBCounter:
+    :path: ../
+
+SPEC CHECKSUMS:
+  CDBKit: a6a979ebc52a9533b70b14d65e1bbaf14b378e34
+  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
+  TBCounter: 5db3b138dbf0a181adf327253b97fb10c6a18215
+
+PODFILE CHECKSUM: 4a1462a66accf0c9d3cff6710762199c73c2a865
+
+COCOAPODS: 1.2.0

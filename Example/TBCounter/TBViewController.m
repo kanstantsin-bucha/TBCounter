@@ -7,21 +7,37 @@
 //
 
 #import "TBViewController.h"
+#import <TBCounter/TBCounter.h>
 
 @interface TBViewController ()
+
+@property (strong, nonatomic) TBCounter * counter;
 
 @end
 
 @implementation TBViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+    self.counter = [TBCounter counterWithCompletion:^(NSError * _Nullable error) {
+        NSLog(@"You are watching view now!");
+    }];
+    
+    [self.counter noteExpectedTasksCount: 2];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
+    [self.counter noteTaskEnded];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear: animated];
+    [self.counter noteTaskEnded];
+}
+
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

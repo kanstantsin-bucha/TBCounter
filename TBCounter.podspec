@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TBCounter'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of TBCounter.'
+  s.version          = '1.0.1'
+  s.summary          = 'Native progress task counter'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+    Task counter with progress calculation. Could be selfreatin.
+    Fired completion when tasks count is 0.
                        DESC
 
   s.homepage         = 'https://github.com/truebucha/TBCounter'
@@ -26,9 +27,9 @@ TODO: Add long description of the pod here.
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'truebucha' => 'truebucha@gmail.com' }
   s.source           = { :git => 'https://github.com/truebucha/TBCounter.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  # s.social_media_url = 'https://twitter.com/truebucha'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '7.0'
 
   s.source_files = 'TBCounter/Classes/**/*'
   
@@ -36,7 +37,7 @@ TODO: Add long description of the pod here.
   #   'TBCounter' => ['TBCounter/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+  s.public_header_files = 'TBCounter/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'CDBKit', '~> 1.0'
 end
