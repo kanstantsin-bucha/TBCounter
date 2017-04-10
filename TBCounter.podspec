@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TBCounter'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'Native progress task counter'
 
 # This description is used to generate tags and improve search results.
@@ -30,6 +30,7 @@ Pod::Spec.new do |s|
   # s.social_media_url = 'https://twitter.com/truebucha'
 
   s.ios.deployment_target = '7.0'
+  s.osx.deployment_target = '10.10'
 
   s.source_files = 'TBCounter/Classes/**/*'
   
@@ -38,6 +39,6 @@ Pod::Spec.new do |s|
   # }
 
   s.public_header_files = 'TBCounter/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'CDBKit', '~> 1.0'
+  s.frameworks = 'Foundation'
+  s.dependency 'CDBKit', '~> 1.1'
 end

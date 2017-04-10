@@ -1,9 +1,9 @@
 PODS:
-  - CDBKit (1.0.1)
+  - CDBKit (1.1.1)
   - Expecta (1.0.5)
   - Specta (1.0.6)
-  - TBCounter (1.0.1):
-    - CDBKit (~> 1.0)
+  - TBCounter (1.0.2):
+    - CDBKit (~> 1.1)
 
 DEPENDENCIES:
   - Expecta
@@ -15,10 +15,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  CDBKit: a6a979ebc52a9533b70b14d65e1bbaf14b378e34
+  CDBKit: eb073c45d4bffbbad99dc9f2a79effbdab890ea7
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
-  TBCounter: 5db3b138dbf0a181adf327253b97fb10c6a18215
+  TBCounter: 2c3c099ad967d4402c1de20ead10920d410957fd
 
 PODFILE CHECKSUM: 4a1462a66accf0c9d3cff6710762199c73c2a865
 
