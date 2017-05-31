@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TBCounter'
-  s.version          = '1.0.2'
+  s.version          = '1.1.0'
   s.summary          = 'Native progress task counter'
 
 # This description is used to generate tags and improve search results.
@@ -19,7 +19,8 @@ Pod::Spec.new do |s|
 
   s.description      = <<-DESC
     Task counter with progress calculation. Could be selfreatin.
-    Fired completion when tasks count is 0.
+    Fired start when note first unprocessed task. Fired completion when unprocessed tasks count reaches 0.
+    Could cycle in this two states if should process after fire enabled
                        DESC
 
   s.homepage         = 'https://github.com/truebucha/TBCounter'

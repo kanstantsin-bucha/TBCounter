@@ -16,12 +16,26 @@
 @property (strong, nonatomic, readwrite) CDBErrorCompletion completion;
 @property (strong, nonatomic, readwrite) NSError * error;
 @property (assign, nonatomic, readwrite) TBCounterState state;
-@property (assign, nonatomic, readwrite) BOOL shouldContinueAfterFire;
+
+@property (assign, nonatomic, readonly) BOOL finished;
+@property (assign, nonatomic, readonly) BOOL shouldLaunch;
 
 @end
 
 
 @implementation TBCounter
+
+- (BOOL)finished {
+    BOOL result = self.state == TBCounterStateFiredAndStopped
+                    || self.state == TBCounterStateInvalidated;
+    return result;
+}
+
+- (BOOL)shouldLaunch {
+    BOOL result = self.state == TBCounterStateNoTasks
+                  || self.state == TBCounterStateFinishedAllTasks;
+    return result;
+}
 
 - (NSInteger)completedTasksCount {
     NSInteger result = self.tasksCount - self.remainTasksCount;
@@ -46,7 +60,7 @@
     }
     
     TBCounter * result = [[[self class] alloc] initInstance];
-    result.state = TBCounterStateCounting;
+    result.state = TBCounterStateNoTasks;
     result.completion = completion;
     return result;
 }
@@ -59,10 +73,27 @@
 
 /// MARK: - public -
 
-- (void)noteExpectedTasksCount:(NSUInteger)count {
-    if (self.state != TBCounterStateCounting
-        && self.state != TBCounterStateFiredAndCounting) {
+- (void)noteTaskStarted {
+    if (self.finished) {
         return;
+    }
+    
+    if (self.shouldLaunch) {
+       [self makeLaunch];
+    }
+    
+    self.tasksCount++;
+    self.remainTasksCount++;
+    [self updateState];
+}
+
+- (void)noteExpectedTasksCount:(NSUInteger)count {
+    if (self.finished) {
+        return;
+    }
+    
+    if (self.shouldLaunch) {
+       [self makeLaunch];
     }
     
     self.tasksCount += count;
@@ -76,8 +107,7 @@
 }
 
 - (void)noteTaskEnded {
-    if (self.state != TBCounterStateCounting
-        && self.state != TBCounterStateFiredAndCounting) {
+    if (self.finished) {
         return;
     }
     
@@ -85,36 +115,33 @@
     [self updateState];
 }
 
-- (void)noteTaskStarted {
-    if (self.state != TBCounterStateCounting
-        && self.state != TBCounterStateFiredAndCounting) {
-        return;
-    }
-    
-    self.tasksCount++;
-    self.remainTasksCount++;
-    [self updateState];
-}
-
 - (void)fire {
-    if (self.state == TBCounterStateInvalidated
-        || self.state == TBCounterStateFired) {
+    if (self.finished) {
         return;
     }
     
     self.completion(self.error);
+    self.remainTasksCount = 0;
     
     if (self.shouldContinueAfterFire) {
-        self.state = TBCounterStateFiredAndCounting;
+        self.state = TBCounterStateFinishedAllTasks;
         return;
     }
     
-    self.state = TBCounterStateFired;
+    self.state = TBCounterStateFiredAndStopped;
     self.counterSelfRetain = nil;
+}
+
+- (void)makeLaunch {
+     if (self.start == nil) {
+        return;
+     }
+     self.start();
 }
 
 - (void)invalidate {
     self.state = TBCounterStateInvalidated;
+    self.counterSelfRetain = nil;
 }
 
 /// MARK: - private -

@@ -12,10 +12,11 @@
 
 typedef NS_ENUM(NSInteger, TBCounterState) {
     TBCounterStateUndefined = 0,
-    TBCounterStateCounting = 1,
-    TBCounterStateFired = 2,
-    TBCounterStateFiredAndCounting = 3,
-    TBCounterStateInvalidated = 4
+    TBCounterStateNoTasks = 1,
+    TBCounterStateProcessingTasks = 2,
+    TBCounterStateFinishedAllTasks = 3,
+    TBCounterStateFiredAndStopped = 4,
+    TBCounterStateInvalidated = 5
 };
 
 @interface TBCounter : NSObject
@@ -31,10 +32,16 @@ typedef NS_ENUM(NSInteger, TBCounterState) {
 @property (assign, nonatomic, readonly) float progress;
 
 @property (strong, nonatomic, readonly, nonnull) CDBErrorCompletion completion;
+/**
+    @brief: will be called when counter note first task started
+            if (shouldContinueAfterFire == YES) will be called each time 
+            it started task after was fired
+*/
+@property (strong, nonatomic, nullable) CDBCompletion start;
 @property (strong, nonatomic, readonly, nullable) NSError * error;
 
 @property (assign, nonatomic, readonly) TBCounterState state;
-@property (assign, nonatomic, readonly) BOOL shouldContinueAfterFire;
+@property (assign, nonatomic) BOOL shouldContinueAfterFire;
 
 
 /**
@@ -53,7 +60,7 @@ typedef NS_ENUM(NSInteger, TBCounterState) {
 
 /**
  @brief: call completion from current state
-         and don't call it when counter reach all task finished state
+         and set remain tasks count to 0
 **/
 
 - (void)fire;
